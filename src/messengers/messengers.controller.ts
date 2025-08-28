@@ -5,7 +5,10 @@ import { ConfigService } from '@nestjs/config';
 
 @Controller('webhook')
 export class MessengersController {
-  constructor(private readonly messengersService: MessengersService, private readonly configService: ConfigService) {}
+  constructor(
+    private readonly messengersService: MessengersService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Get()
   verifyWebhook(
@@ -14,7 +17,12 @@ export class MessengersController {
     @Query('hub.challenge') challenge: string,
     @Res() res: Response,
   ) {
-    if (mode === 'subscribe' && token === this.configService.get('FB_VERIFY_TOKEN')) {
+    console.log('env', this.configService.get('FB_VERIFY_TOKEN'));
+    console.log('receive env', token)
+    if (
+      mode === 'subscribe' &&
+      token === this.configService.get('FB_VERIFY_TOKEN')
+    ) {
       console.log('WEBHOOK_VERIFIED');
       res.status(200).send(challenge);
     }
