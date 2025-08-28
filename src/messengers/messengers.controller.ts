@@ -35,7 +35,7 @@ export class MessengersController {
       for (const entry of body.entry) {
         const event = entry.messaging[0];
         const senderId = event.sender.id;
-
+        console.log('sender id', senderId);
         if (event.message && event.message.text) {
           const text = event.message.text;
           await this.messengersService.sendTextMessage(
