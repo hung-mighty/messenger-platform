@@ -2,9 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessengersModule } from './messengers/messengers.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [MessengersModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MessengersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
