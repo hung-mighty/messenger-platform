@@ -4,11 +4,9 @@ import axios from 'axios';
 
 @Injectable()
 export class MessengersService {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly pageAccessToken: any,
-  ) {
-    pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
+  private readonly pageAccessToken: any;
+  constructor(private readonly configService: ConfigService) {
+    this.pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
   }
   private readonly apiUrl = 'https://graph.facebook.com/v19.0/me/messages';
 
