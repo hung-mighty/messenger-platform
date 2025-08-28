@@ -8,7 +8,7 @@ export class MessengersService {
   constructor(private readonly configService: ConfigService) {
     this.pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
   }
-  private readonly apiUrl = 'https://graph.facebook.com/v19.0/me/messages';
+  private readonly apiUrl = 'https://graph.facebook.com/v23.0/me/messages';
 
   async sendTextMessage(recipientId: string, message: string) {
     const payload = {
