@@ -15,7 +15,7 @@ export class MessengersService {
       recipient: { id: recipientId },
       message: { text: message },
     };
-
+    console.log('access_token', this.pageAccessToken);
     try {
       await axios.post(
         `${this.apiUrl}?access_token=${this.pageAccessToken}`,
