@@ -53,4 +53,13 @@ export class MessengersController {
       return res.sendStatus(404);
     }
   }
+
+  @Post('send-message')
+  async sendMessage(@Body() body: any) {
+    await this.messengersService.sendMessage(
+      body.senderId,
+      body.access_token,
+      body.text,
+    );
+  }
 }

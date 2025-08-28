@@ -8,7 +8,7 @@ export class MessengersService {
   constructor(private readonly configService: ConfigService) {
     this.pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
   }
-  private readonly apiUrl = 'https://graph.facebook.com/v23.0/me/messages';
+  private readonly apiUrl = 'https://graph.facebook.com/v2.6/me/messages';
 
   async sendTextMessage(recipientId: string, message: string) {
     const payload = {
@@ -21,6 +21,21 @@ export class MessengersService {
         `${this.apiUrl}?access_token=${this.pageAccessToken}`,
         payload,
       );
+    } catch (err) {
+      console.error(
+        'Error sending message:',
+        err.response?.data || err.message,
+      );
+      throw err;
+    }
+  }
+
+  async sendMessage(senderId, access_token, text) {
+    try {
+      await axios.post(`${this.apiUrl}?access_token=${access_token}`, {
+        recipient: { id: senderId },
+        message: { text: text },
+      });
     } catch (err) {
       console.error(
         'Error sending message:',
