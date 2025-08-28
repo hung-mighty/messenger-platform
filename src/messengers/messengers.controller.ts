@@ -18,15 +18,15 @@ export class MessengersController {
     @Res() res: Response,
   ) {
     console.log('env', this.configService.get('FB_VERIFY_TOKEN'));
-    console.log('receive env', token)
+    console.log('receive env', token);
     if (
       mode === 'subscribe' &&
       token === this.configService.get('FB_VERIFY_TOKEN')
     ) {
       console.log('WEBHOOK_VERIFIED');
-      res.status(200).send(challenge);
+      return res.status(200).send(challenge);
     }
-    res.sendStatus(403);
+    return res.sendStatus(403);
   }
 
   @Post()
@@ -44,9 +44,9 @@ export class MessengersController {
           );
         }
       }
-      res.status(200).send('EVENT_RECEIVED');
+      return res.status(200).send('EVENT_RECEIVED');
     } else {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
   }
 }
