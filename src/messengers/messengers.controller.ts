@@ -5,11 +5,11 @@ import { ConfigService } from '@nestjs/config';
 
 @Controller('webhook')
 export class MessengersController {
-  constructor( 
+  private PAGE_ACCESS_TOKEN: any;
+
+  constructor(
     private readonly messengersService: MessengersService,
     private readonly configService: ConfigService,
-    public PAGE_ACCESS_TOKEN: any,
-    
   ) {
     this.PAGE_ACCESS_TOKEN = this.configService.get('PAGE_ACCESS_TOKEN');
   }
