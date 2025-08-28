@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
 @Injectable()
 export class MessengersService {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly pageAccessToken: any,
+  ) {
+    pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
+  }
   private readonly apiUrl = 'https://graph.facebook.com/v19.0/me/messages';
-  private readonly pageAccessToken = process.env.FB_PAGE_ACCESS_TOKEN;
 
   async sendTextMessage(recipientId: string, message: string) {
     const payload = {
