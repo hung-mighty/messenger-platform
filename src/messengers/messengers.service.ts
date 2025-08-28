@@ -18,7 +18,7 @@ export class MessengersService {
     console.log('access_token', this.pageAccessToken);
     try {
       await axios.post(
-        `${this.apiUrl}?access_token=${this.pageAccessToken}`,
+        `${this.apiUrl}?access_token=${this.pageAccessToken.trim()}`,
         payload,
       );
     } catch (err) {
