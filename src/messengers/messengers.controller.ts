@@ -23,8 +23,6 @@ export class MessengersController {
     @Query('hub.challenge') challenge: string,
     @Res() res: Response,
   ) {
-    console.log('env', this.configService.get('FB_VERIFY_TOKEN'));
-    console.log('receive env', token);
     if (
       mode === 'subscribe' &&
       token === this.configService.get('FB_VERIFY_TOKEN')
@@ -47,10 +45,6 @@ export class MessengersController {
             senderId,
             text,
           });
-          // await this.messengersService.sendTextMessage(
-          //   senderId,
-          //   `Bạn vừa nhắn: ${text}`,
-          // );
         }
       }
       return res.status(200).send('EVENT_RECEIVED');
@@ -59,12 +53,4 @@ export class MessengersController {
     }
   }
 
-  @Post('send-message')
-  async sendMessage(@Body() body: any) {
-    await this.messengersService.sendMessage(
-      body.senderId,
-      body.access_token,
-      body.text,
-    );
-  }
 }
