@@ -1,98 +1,93 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Facebook Messenger Chatbot Setup
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Hướng dẫn từng bước để tạo chatbot Messenger
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Yêu cầu
 
-## Description
+- Tài khoản [Facebook Developer](https://developers.facebook.com/)
+- Fanpage Facebook
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Các bước cấu hình
 
-## Project setup
+### 1. Tạo Fanpage Facebook
 
-```bash
-$ npm install
+Vào Facebook → Tạo trang mới.
+
+---
+
+### 2. Tạo ứng dụng
+
+Truy cập [Meta for Developers](https://developers.facebook.com/apps/) → **Create App**  
+Chọn loại ứng dụng phù hợp (Business / Other).
+
+![Create App](docs/images/image.png)  
+![App Settings](docs/images/image-1.png)  
+![Messenger Product](docs/images/image-2.png)  
+![App Dashboard](docs/images/image-3.png)
+
+---
+
+### 3. Thiết lập Messenger
+
+Chọn **Messenger** trong App Dashboard → Bật.
+
+![Messenger Setup](docs/images/image-4.png)
+
+---
+
+### 4. Đăng ký Webhook
+
+Nhập **Webhook URL** và **Verify Token** (tự tạo, lưu trong `.env`).
+
+![Webhook Register](docs/images/image-5.png)  
+![Webhook Fields](docs/images/image-13.png)  
+![Webhook Confirm](docs/images/image-14.png)
+
+---
+
+### 5. Kết nối với Fanpage
+
+Chọn fanpage đã tạo để kết nối.
+
+![Connect Page](docs/images/image-6.png)
+
+---
+
+### 6. Đăng ký các trường thông tin (webhook fields)
+
+![Webhook Fields](docs/images/image-7.png)
+![Webhook Fields](docs/images/image-8.png)
+
+---
+
+### 7. Tạo Page Access Token
+
+Copy **Page Access Token** và lưu vào `.env`.
+
+![Token Example](docs/images/image-9.png)
+
+---
+
+### 8. Chuyển ứng dụng sang chế độ chính thức
+
+![Switch App Mode](docs/images/image-10.png)
+
+---
+
+### 9. Thêm URL Chính sách Quyền riêng tư
+
+Có thể tạo nhanh tại [Free Privacy Policy Generator](https://app.freeprivacypolicy.com/wizard/privacy-policy).
+
+![Privacy Policy](docs/images/image-12.png)
+
+---
+
+## Cấu hình môi trường
+
+Tạo file `.env` trong project:
+
+```env
+PAGE_ACCESS_TOKEN=<your_page_access_token>
+VERIFY_TOKEN=<your_verify_token>
+APP_SECRET=<your_app_secret>
 ```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

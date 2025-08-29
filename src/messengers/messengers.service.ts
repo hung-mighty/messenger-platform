@@ -11,7 +11,7 @@ export class MessengersService {
     this.pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
     this.ollamaApi = this.configService.get('OLLAMA_URL');
   }
-  private readonly apiUrl = 'https://graph.facebook.com/v2.6/me/messages';
+  private readonly apiUrl = 'https://graph.facebook.com/v23.0/me/messages';
 
   async sendTextMessage(recipientId: string, message: string) {
     const payload = {
