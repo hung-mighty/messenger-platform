@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Query, Body, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, Req, Res, Inject } from '@nestjs/common';
 import { MessengersService } from './messengers.service';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { Queue } from 'bullmq';
 
 @Controller('webhook')
 export class MessengersController {
   private PAGE_ACCESS_TOKEN: any;
 
   constructor(
+     @Inject('MESSAGE_QUEUE') private messageQueue: Queue,
     private readonly messengersService: MessengersService,
     private readonly configService: ConfigService,
   ) {
@@ -39,13 +41,16 @@ export class MessengersController {
       for (const entry of body.entry) {
         const event = entry.messaging[0];
         const senderId = event.sender.id;
-        console.log('sender id', senderId);
         if (event.message && event.message.text) {
           const text = event.message.text;
-          await this.messengersService.sendTextMessage(
+          await this.messageQueue.add('chat-message', {
             senderId,
-            `Bạn vừa nhắn: ${text}`,
-          );
+            text,
+          });
+          // await this.messengersService.sendTextMessage(
+          //   senderId,
+          //   `Bạn vừa nhắn: ${text}`,
+          // );
         }
       }
       return res.status(200).send('EVENT_RECEIVED');

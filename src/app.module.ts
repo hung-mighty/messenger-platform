@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessengersModule } from './messengers/messengers.module';
 import { ConfigModule } from '@nestjs/config';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
     MessengersModule,
+    QueueModule,
   ],
   controllers: [AppController],
   providers: [AppService],
