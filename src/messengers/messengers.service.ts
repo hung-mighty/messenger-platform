@@ -6,12 +6,10 @@ import OpenAI from 'openai';
 @Injectable()
 export class MessengersService {
   private readonly pageAccessToken: any;
-  private client: OpenAI;
+  private readonly ollamaApi: any;
   constructor(private readonly configService: ConfigService) {
     this.pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
-    this.client = new OpenAI({
-      apiKey: this.configService.get<string>('OPENAI_API_KEY'),
-    });
+    this.ollamaApi = this.configService.get('OLLAMA_URL');
   }
   private readonly apiUrl = 'https://graph.facebook.com/v2.6/me/messages';
 
@@ -52,18 +50,12 @@ export class MessengersService {
     }
   }
 
-  async chatWithGPT(message: string): Promise<string> {
-    const completion = await this.client.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: 'Bạn là một chatbot hỗ trợ khách hàng.' },
-        { role: 'user', content: message },
-      ],
+  async chatWithAI(message: string): Promise<string> {
+    const response = await axios.post(`${this.ollamaApi}`, {
+      model: 'llama3',
+      prompt: message,
+      stream: false,
     });
-
-    return (
-      completion.choices[0].message?.content ??
-      'Xin lỗi, tôi chưa có câu trả lời.'
-    );
+    return response.data?.response ?? 'Xin lỗi, tôi chưa có câu trả lời.';
   }
 }

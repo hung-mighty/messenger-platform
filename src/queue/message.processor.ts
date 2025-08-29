@@ -16,7 +16,7 @@ export class MessageProcessor implements OnModuleInit {
       async (job) => {
         const { senderId, text } = job.data;
 
-        const reply = await this.messengersService.chatWithGPT(text);
+        const reply = await this.messengersService.chatWithAI(text);
         console.log('reply>>', reply);
         await this.messengersService.sendTextMessage(senderId, reply);
       },
