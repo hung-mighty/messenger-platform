@@ -22,8 +22,7 @@ export class MessageProcessor implements OnModuleInit {
       },
       {
         connection: {
-          host: this.configService.get('REDIS_HOST') || 'localhost',
-          port: Number(this.configService.get('REDIS_PORT')) || 6379,
+          url: this.configService.get('REDIS_URL'),
         },
       },
     );
