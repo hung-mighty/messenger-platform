@@ -9,8 +9,7 @@ import { Queue } from 'bullmq';
       useFactory: (configService: ConfigService) => {
         return new Queue('message-queue', {
           connection: {
-            host: configService.get('REDIS_HOST') || 'localhost',
-            port: Number(configService.get('REDIS_PORT')) || 6379,
+            url: configService.get('REDIS_URL'),
           },
         });
       },
