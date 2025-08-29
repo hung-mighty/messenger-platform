@@ -7,7 +7,7 @@ import { Queue } from 'bullmq';
     {
       provide: 'MESSAGE_QUEUE',
       useFactory: (configService: ConfigService) => {
-        return new Queue('message-queue', {
+        return new Queue('chat-message', {
           connection: {
             url: configService.get('REDIS_URL'),
           },
