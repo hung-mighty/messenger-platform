@@ -12,7 +12,7 @@ export class MessageProcessor implements OnModuleInit {
 
   onModuleInit() {
     const worker = new Worker(
-      'message-queue',
+      'chat-message',
       async (job) => {
         const { senderId, text } = job.data;
 
