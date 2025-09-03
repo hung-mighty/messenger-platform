@@ -44,7 +44,7 @@ export class MessengersController {
 
   @Post()
   async handleMessage(@Body() body: any, @Res() res: Response) {
-    console.log('body>>', body);
+    console.log('body>>', JSON.stringify(body,null,2 ));
     if (body.object === 'page') {
       for (const entry of body.entry) {
         const event = entry.messaging[0];
