@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Query, Body, Req, Res, Inject } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Query,
+  Body,
+  Req,
+  Res,
+  Inject,
+} from '@nestjs/common';
 import { MessengersService } from './messengers.service';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
@@ -9,7 +18,7 @@ export class MessengersController {
   private PAGE_ACCESS_TOKEN: any;
 
   constructor(
-     @Inject('MESSAGE_QUEUE') private messageQueue: Queue,
+    @Inject('MESSAGE_QUEUE') private messageQueue: Queue,
     private readonly messengersService: MessengersService,
     private readonly configService: ConfigService,
   ) {
@@ -35,6 +44,7 @@ export class MessengersController {
 
   @Post()
   async handleMessage(@Body() body: any, @Res() res: Response) {
+    console.log('body>>', body);
     if (body.object === 'page') {
       for (const entry of body.entry) {
         const event = entry.messaging[0];
@@ -52,5 +62,4 @@ export class MessengersController {
       return res.sendStatus(404);
     }
   }
-
 }
