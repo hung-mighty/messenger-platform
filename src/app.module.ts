@@ -28,6 +28,6 @@ export class AppModule {
           },
         }),
       )
-      .forRoutes(MessengersController);
+      .forRoutes('webhook');
   }
 }
