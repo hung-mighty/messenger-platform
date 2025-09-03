@@ -1,13 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as express from 'express';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(
-    express.json({
+    bodyParser.json({
       limit: '125mb',
-      verify: (req: any, res, buf) => {
+      verify(req, res, buf: Buffer, encoding: string) {
         if (req.url == 'webhook') {
           req['rawBody'] = buf.toString();
         }
