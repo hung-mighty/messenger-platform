@@ -7,8 +7,8 @@ async function bootstrap() {
   app.use(
     express.json({
       limit: '125mb',
-      verify(req, res, buf: Buffer, encoding: string) {
-        if (req.url == '/webhook') {
+      verify: (req: any, res, buf) => {
+        if (req.url == 'webhook') {
           req['rawBody'] = buf.toString();
         }
       },
