@@ -8,7 +8,7 @@ async function bootstrap() {
     bodyParser.json({
       limit: '125mb',
       verify(req, res, buf: Buffer, encoding: string) {
-        if (req.url == 'webhook') {
+        if (req.url == '/webhook') {
           req['rawBody'] = buf.toString();
         }
       },
