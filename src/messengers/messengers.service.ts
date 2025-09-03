@@ -71,10 +71,10 @@ export class MessengersService {
 
     const elements = signature.split('=');
     const signatureHash = elements[1];
-
+    console.log('rawBody', JSON.stringify(req.rawBody))
     const expectedHash = crypto
       .createHmac('sha256', this.verifyToken || '')
-      .update(req.rawBody) // <-- dùng rawBody
+      .update(req.rawBody)
       .digest('hex');
     console.log('exprectedHash>>', expectedHash);
 
