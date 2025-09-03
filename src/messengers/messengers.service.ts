@@ -7,9 +7,11 @@ import * as crypto from 'crypto';
 export class MessengersService {
   private readonly pageAccessToken: any;
   private readonly ollamaApi: any;
+  private readonly verifyToken: any;
   constructor(private readonly configService: ConfigService) {
     this.pageAccessToken = this.configService.get('PAGE_ACCESS_TOKEN');
     this.ollamaApi = this.configService.get('OLLAMA_URL');
+    this.verifyToken = this.configService.get('FB_VERIFY_TOKEN');
   }
   private readonly apiUrl = 'https://graph.facebook.com/v23.0/me/messages';
 
@@ -71,7 +73,7 @@ export class MessengersService {
     const signatureHash = elements[1];
 
     const expectedHash = crypto
-      .createHmac('sha256', process.env.APP_SECRET || '')
+      .createHmac('sha256', this.verifyToken || '')
       .update(req.rawBody) // <-- dùng rawBody
       .digest('hex');
     console.log('exprectedHash>>', expectedHash);
