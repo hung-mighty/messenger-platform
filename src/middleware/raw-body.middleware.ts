@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 export class RawBodyMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     let data = Buffer.from('');
+    console.log('data >>', data);
     req.on('data', (chunk) => {
       data = Buffer.concat([data, chunk]);
     });
