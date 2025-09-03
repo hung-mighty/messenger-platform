@@ -71,13 +71,11 @@ export class MessengersService {
 
     const elements = signature.split('=');
     const signatureHash = elements[1];
-    console.log('rawBody', JSON.stringify(req.rawBody));
     const expectedHash = crypto
       .createHmac('sha256', this.appSecret || '')
       .update(req.rawBody)
       .digest('hex');
     console.log('exprectedHash>>', expectedHash);
-
     if (signatureHash !== expectedHash) {
       throw new Error("Couldn't validate the request signature.");
     }
