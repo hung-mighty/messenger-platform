@@ -19,15 +19,5 @@ import { MessengersController } from './messengers/messengers.controller';
   providers: [AppService],
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        express.json({
-          verify: (req: any, res, buf) => {
-            req.rawBody = buf.toString();
-          },
-        }),
-      )
-      .forRoutes('webhook');
-  }
+
 }

@@ -4,11 +4,16 @@ import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-// app.use(express.json({
-//     verify: (req: any, res, buf) => {
-//       req.rawBody = buf;
-//     },
-//   }));   
+  app.use(
+    express.json({
+      limit: '125mb',
+      verify(req, res, buf: Buffer, encoding: string) {
+        if (req.url == '/api/webhook') {
+          req['rawBody'] = buf.toString();
+        }
+      },
+    }),
+  );
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
