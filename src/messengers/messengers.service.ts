@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import OpenAI from 'openai';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class MessengersService {
@@ -57,5 +57,28 @@ export class MessengersService {
       stream: false,
     });
     return response.data?.response ?? 'Xin lỗi, tôi chưa có câu trả lời.';
+  }
+
+  verifySignature(req: any) {
+    const signature = req.headers['x-hub-signature-256'];
+    console.log('signature >>', signature);
+    if (!signature) {
+      console.warn(`Couldn't find "x-hub-signature-256" in headers.`);
+      return false;
+    }
+
+    const elements = signature.split('=');
+    const signatureHash = elements[1];
+
+    const expectedHash = crypto
+      .createHmac('sha256', process.env.APP_SECRET || '')
+      .update(req.rawBody) // <-- dùng rawBody
+      .digest('hex');
+    console.log('exprectedHash>>', expectedHash);
+
+    if (signatureHash !== expectedHash) {
+      throw new Error("Couldn't validate the request signature.");
+    }
+    return true;
   }
 }

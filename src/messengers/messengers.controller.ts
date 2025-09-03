@@ -7,6 +7,7 @@ import {
   Req,
   Res,
   Inject,
+  Headers,
 } from '@nestjs/common';
 import { MessengersService } from './messengers.service';
 import { Response } from 'express';
@@ -43,23 +44,28 @@ export class MessengersController {
   }
 
   @Post()
-  async handleMessage(@Body() body: any, @Res() res: Response) {
-    console.log('body>>', JSON.stringify(body,null,2 ));
-    if (body.object === 'page') {
-      for (const entry of body.entry) {
-        const event = entry.messaging[0];
-        const senderId = event.sender.id;
-        if (event.message && event.message.text) {
-          const text = event.message.text;
-          await this.messageQueue.add('chat-message', {
-            senderId,
-            text,
-          });
+  async handleMessage(@Req() req: any, @Res() res: Response) {
+    try {
+    
+      this.messengersService.verifySignature(req);
+
+      const body = req.body;
+      if (body.object === 'page') {
+        for (const entry of body.entry) {
+          const event = entry.messaging[0];
+          const senderId = event.sender.id;
+          if (event.message && event.message.text) {
+            const text = event.message.text;
+            await this.messageQueue.add('chat-message', { senderId, text });
+          }
         }
+        return res.status(200).send('EVENT_RECEIVED');
+      } else {
+        return res.sendStatus(404);
       }
-      return res.status(200).send('EVENT_RECEIVED');
-    } else {
-      return res.sendStatus(404);
+    } catch (e) {
+      console.error(e.message);
+      return res.sendStatus(403);
     }
   }
 }
