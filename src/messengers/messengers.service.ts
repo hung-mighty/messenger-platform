@@ -68,6 +68,8 @@ export class MessengersService {
       console.warn(`Couldn't find "x-hub-signature-256" in headers.`);
       return false;
     }
+    console.log('raw body',req.rawBody);
+    
 
     const elements = signature.split('=');
     const signatureHash = elements[1];

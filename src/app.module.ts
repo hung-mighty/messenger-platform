@@ -24,7 +24,7 @@ export class AppModule {
       .apply(
         express.json({
           verify: (req: any, res, buf) => {
-            req.rawBody = buf;
+            req.rawBody = buf.toString();
           },
         }),
       )

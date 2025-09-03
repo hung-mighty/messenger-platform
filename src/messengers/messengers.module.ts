@@ -8,5 +8,6 @@ import { MessageProcessor } from 'src/queue/message.processor';
   controllers: [MessengersController],
   providers: [MessengersService, MessageProcessor],
   imports: [QueueModule]
+  
 })
 export class MessengersModule {}
